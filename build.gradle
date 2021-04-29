@@ -1,0 +1,21 @@
+apply plugin: "eclipse"
+apply plugin: 'java'
+apply plugin: 'application'
+
+archivesBaseName = "pokedex"
+version = '1.0'
+mainClassName = "main.java.App"
+
+repositories {
+ mavenCentral()
+}
+
+dependencies {
+  implementation group: 'com.sparkjava', name: 'spark-core', version: '2.3'
+  implementation group: 'org.apache.velocity', name: 'velocity', version: '1.7'
+  testImplementation group: 'junit', name: 'junit', version: '4.+'
+  implementation group: 'org.sql2o', name: 'sql2o', version: '1.5.4'
+  implementation group: 'org.postgresql', name: 'postgresql', version: "9.4-1201-jdbc41"
+  testImplementation group: 'org.fluentlenium', name: 'fluentlenium-core', version: '0.10.3'
+  testImplementation group: 'org.fluentlenium', name: 'fluentlenium-assertj', version: '0.10.3'
+}

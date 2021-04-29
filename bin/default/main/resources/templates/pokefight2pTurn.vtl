@@ -1,0 +1,101 @@
+<div class="toprow">
+#if ($attackName)
+<script>
+var func = function() {
+    $("#attacker").animate({"left": "650px"}, 500)
+
+}
+var func2 = function() {
+    $("#attacker").animate({"left": "0px"}, 500)
+
+}
+
+setTimeout(func, 0);
+setTimeout(func2, 510);
+</script>
+
+
+<br>
+<h1>Player 1 used ${attackName}!!! $attackResult</h1>
+<br>
+
+#end
+
+#if ($switched)
+  <h2>Player 1 has switched their Pokemon! You don't know what it is yet but you can hit it as it comes out of its ball! It has $player1Pokemon.getHp() HP left!</h1>
+
+#else
+  <h2>Player 2's $player2Pokemon.getName() has $player2Pokemon.getHp() HP left!</h1>
+#end
+</div>
+
+<br>
+
+<div class="row battlefield">
+  <div class="col-md-3 col-md-offset-2 poke-battle-gif">
+
+    <div class="progress">
+
+      <div class="progress-bar progress-bar-striped progress-bar-success active" role="progressbar" aria-valuenow="70"
+      aria-valuemin="0" aria-valuemax="100" style="$p1HpBar">
+        $player1Pokemon.getHp() / 500
+      </div>
+    </div>
+    #if (!$switched)
+
+    <div id="attacker">
+      <img class="poke-battle-flipped-gif" src=/pokemon/${player1Pokemon.getName()}.gif>
+    </div>
+
+    <h3>Player 1 - $player1Pokemon.getName()</h3>
+    #else
+      <img class="poke-battle-flipped-gif" src=/pokemon/pokeball.gif>
+      <h3>Unknown!</h3>
+    #end
+  </div>
+
+  <div class="col-md-3 col-md-offset-3 poke-battle-gif">
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="70"
+      aria-valuemin="0" aria-valuemax="100" style="$p2HpBar">
+        $player2Pokemon.getHp() / 500
+      </div>
+    </div>
+    <div #if ($attackName)id="defender" #end>
+      <img src=/pokemon/${player2Pokemon.getName()}.gif>
+    </div>
+    <h3>Player 2 - $player2Pokemon.getName()</h3>
+  </div>
+</div>
+
+<div class="row">
+
+<h2>$player2Pokemon.getName(), select your move below!</h2>
+
+#foreach ($move in $player2Pokemon.getMoves())
+  <div class="col-md-6">
+    <div class="move-box">
+      <form action="/pokefight/1pturn" method="post">
+        <input type="hidden" value="$move.getName()" name="move">
+        <button type="submit" class="btn btn-danger battleMove">$move.getName()</button>
+      </form>
+    </div>
+  </div>
+
+#end
+
+  <br>
+  <br>
+  <br>
+  <form action="/pokefight/player2Change" method="post">
+    <label for="player2Change" class="redeploy">Type A Pok&eacute;mon's Name To Swap</label>
+    <input id="player2Change" name="player2Change" type="text" required>
+    <button type="submit" class="btn btn-warning redeploy">Redeploy!</button>
+  </form>
+</div>
+
+
+
+<br>
+<a href="/" class="btn btn-info home">Back To Home</a>
+<br>
